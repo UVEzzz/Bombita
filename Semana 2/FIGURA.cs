@@ -2,90 +2,132 @@ using UnityEngine;
 
 public class Figura : MonoBehaviour
 {
-    // Este método calculará el área de la figura
     public virtual float CalcularArea()
     {
         return 0f;
     }
 }
 
-// Subclase para un rectángulo
 public class Rectangulo : Figura
 {
     public float baseRectangulo;
     public float alturaRectangulo;
 
-    // Constructor que recibe la base y la altura
     public Rectangulo(float baseRectangulo, float alturaRectangulo)
     {
         this.baseRectangulo = baseRectangulo;
         this.alturaRectangulo = alturaRectangulo;
     }
 
-    // Sobreescribimos el método CalcularArea para el rectángulo
     public override float CalcularArea()
     {
         return baseRectangulo * alturaRectangulo;
     }
 }
 
-// Subclase para un cuadrado
 public class Cuadrado : Figura
 {
     public float lado;
 
-    // Constructor que recibe el lado
     public Cuadrado(float lado)
     {
         this.lado = lado;
     }
 
-    // Sobreescribimos el método CalcularArea para el cuadrado
     public override float CalcularArea()
     {
         return lado * lado;
     }
 }
 
-// Subclase para un círculo
 public class Circulo : Figura
 {
     public float radio;
 
-    // Constructor que recibe el radio
     public Circulo(float radio)
     {
         this.radio = radio;
     }
 
-    // Sobreescribimos el método CalcularArea para el círculo
     public override float CalcularArea()
     {
         return Mathf.PI * radio * radio;
     }
 }
 
-
-
-// Subclase para un triángulo
 public class Triangulo : Figura
 {
     public float baseTriangulo;
     public float alturaTriangulo;
 
-    // Constructor que recibe la base y la altura
     public Triangulo(float baseTriangulo, float alturaTriangulo)
     {
         this.baseTriangulo = baseTriangulo;
         this.alturaTriangulo = alturaTriangulo;
     }
 
-    // Sobreescribimos el método CalcularArea para el triángulo
     public override float CalcularArea()
     {
         return 0.5f * baseTriangulo * alturaTriangulo;
     }
 }
 
+public class FiguraManager : MonoBehaviour
+{
+    void Start()
+    {
+        bool seleccionarNuevaFigura = true;
 
+        while (seleccionarNuevaFigura)
+        {
+            Debug.Log("Seleccione la figura:");
+            Debug.Log("1. Rectángulo");
+            Debug.Log("2. Cuadrado");
+            Debug.Log("3. Círculo");
+            Debug.Log("4. Triángulo");
+            Debug.Log("5. Terminar");
 
+            int opcion = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                    Figura rectangulo = new Rectangulo(4f, 6f); 
+                    Debug.Log("Área del rectángulo: " + rectangulo.CalcularArea());
+                    break;
+
+                case 2:
+                    Figura cuadrado = new Cuadrado(5f); 
+                    Debug.Log("Área del cuadrado: " + cuadrado.CalcularArea());
+                    break;
+
+                case 3:
+                    Figura circulo = new Circulo(5f);
+                    Debug.Log("Área del círculo: " + circulo.CalcularArea());
+                    break;
+
+                case 4:
+                    Figura triangulo = new Triangulo(3f, 8f); 
+                    Debug.Log("Área del triángulo: " + triangulo.CalcularArea());
+                    break;
+
+                case 5:
+                    seleccionarNuevaFigura = false;
+                    break;
+
+                default:
+                    Debug.Log("Opción no válida.");
+                    break;
+            }
+
+            if (seleccionarNuevaFigura)
+            {
+                Debug.Log("¿Desea seleccionar otra figura? (Sí/No)");
+                string respuesta = Console.ReadLine().Trim().ToLower();
+
+                if (respuesta == "no" || respuesta == "n")
+                    seleccionarNuevaFigura = false;
+            }
+        }
+    }
+}
